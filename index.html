@@ -10,6 +10,7 @@
 <body>
 
     <h1>I am Ajith</h1>
+    <hr>
     <p>CREATE OR REPLACE PROCEDURE FLAMES(P_BOY VARCHAR2,P_GIRL VARCHAR2) AS<br> BOY VARCHAR2(50):= UPPER(P_BOY);<br> GIRL VARCHAR2(50):= UPPER(P_GIRL);<br> TYPE CHK IS TABLE OF VARCHAR2(1) INDEX BY BINARY_INTEGER;<br> NAME1 CHK;<br> NAME2 CHK;<br> FINAL_NAME
         VARCHAR2(50);
         <br> Z VARCHAR2(100) := ' ';<br> Y VARCHAR2(100) := ' ';<br> X NUMBER;<br> B VARCHAR2(255) := 'FLAMES';<br> C VARCHAR2(10);<br> BEGIN
@@ -21,7 +22,7 @@
                 B := 'AFFECTION';<br> ELSIF (B = 'M') THEN B := 'MARRIAGE';<br> ELSIF (B = 'E') THEN B := 'ENEMY';<br> ELSIF (B = 'S') THEN B := 'SISTER';<br> END IF;<br> DBMS_OUTPUT.PUT_LINE(boy || ' + ' || girl ||' = ' || B || '!');<br> END;
                 <br> /
                 <br> EXEC FLAMES('UNKNOWN','ANYONE');<br></p>
-
+    <hr>
 </body>
 
 </html>
