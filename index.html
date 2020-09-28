@@ -10,7 +10,17 @@
 <body>
 
     <h1>I am Ajith</h1>
-    <p>Trying to learn HTML</p>
+    <p>CREATE OR REPLACE PROCEDURE FLAMES(P_BOY VARCHAR2,P_GIRL VARCHAR2) AS<br> BOY VARCHAR2(50):= UPPER(P_BOY);<br> GIRL VARCHAR2(50):= UPPER(P_GIRL);<br> TYPE CHK IS TABLE OF VARCHAR2(1) INDEX BY BINARY_INTEGER;<br> NAME1 CHK;<br> NAME2 CHK;<br> FINAL_NAME
+        VARCHAR2(50);
+        <br> Z VARCHAR2(100) := ' ';<br> Y VARCHAR2(100) := ' ';<br> X NUMBER;<br> B VARCHAR2(255) := 'FLAMES';<br> C VARCHAR2(10);<br> BEGIN
+        <br> SELECT SUBSTR(BOY,LEVEL,1) BULK COLLECT INTO NAME1 FROM DUAL CONNECT BY LEVEL
+        <=L ENGTH(BOY);<br>
+            SELECT SUBSTR(GIRL,LEVEL,1) BULK COLLECT INTO NAME2 FROM DUAL CONNECT BY LEVEL
+            <=L ENGTH(GIRL);<br>
+                FOR I IN NAME1.FIRST..NAME1.LAST LOOP<br> FOR J IN NAME2.FIRST..NAME2.LAST LOOP<br> IF NAME1(I) = NAME2(J) THEN<br> NAME1(I) := '';<br> NAME2(J) := '';<br> END IF;<br> END LOOP;<br> END LOOP;<br> FOR A IN NAME1.FIRST..NAME1.LAST LOOP<br>                Z := Z || NAME1(A);<br> END LOOP;<br> FOR B IN NAME2.FIRST..NAME2.LAST LOOP<br> Y := Y || NAME2(B);<br> END LOOP;<br> FINAL_NAME := TRIM(Z)||TRIM(Y);<br> X := LENGTH(FINAL_NAME);<br> B := B||B||B||B||B||B||B||B||B||B||B||B||B||B||B;<br>                C := SUBSTR(B,X,1);<br> B := SUBSTR(REPLACE(B,C,''),INSTR(B,C));<br> C := SUBSTR(B,(X),1);<br> B := SUBSTR(REPLACE(B,C,''),INSTR(B,C));<br> C := SUBSTR(B,(X),1);<br> B := SUBSTR(REPLACE(B,C,''),INSTR(B,C));<br> C := SUBSTR(B,(X),1);<br>                B := SUBSTR(REPLACE(B,C,''),INSTR(B,C));<br> C := SUBSTR(B,(X),1);<br> B := SUBSTR(REPLACE(B,C,''),INSTR(B,C));<br> B := SUBSTR(B,1,1);<br> IF (B = 'F') THEN B := 'FRIENDS';<br> ELSIF (B = 'L') THEN B := 'LOVE';<br> ELSIF (B = 'A') THEN
+                B := 'AFFECTION';<br> ELSIF (B = 'M') THEN B := 'MARRIAGE';<br> ELSIF (B = 'E') THEN B := 'ENEMY';<br> ELSIF (B = 'S') THEN B := 'SISTER';<br> END IF;<br> DBMS_OUTPUT.PUT_LINE(boy || ' + ' || girl ||' = ' || B || '!');<br> END;
+                <br> /
+                <br> EXEC FLAMES('UNKNOWN','ANYONE');<br></p>
 
 </body>
 
