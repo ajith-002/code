@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>I-am-AK</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/normalize.css">
+</head>
+
+<body>
+    <pre>
+    <img src="images/AK.png" alt="ajith" width="120" height="140">
+    </pre>
+    <h1> <pre>  I am AK </pre>
+    </h1>
+    <hr>
+    <p>
+        <pre>
+		
+		create or replace procedure enc(input varchar2,k number,Output OUT VARCHAR2) AS
+		a2z VARCHAR2(100):='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+		x number;
+		Y VARCHAR2(100);
+		Z VARCHAR2(250);
+		p varchar(1000) := ' ';
+		begin
+		z:= length(input);
+		FOR I IN 1..Z LOOP
+		X:= (INSTR (A2Z,SUBSTR(INPUT,I,1)))+K;
+		y:= substr(a2z,mod(x,62),1);
+		IF substr(input,i,1)=' ' THEN
+		p := p || ' ';
+		ELSE
+		p := p || y;
+		END IF;
+		END LOOP;
+		--DBMS_OUTPUT.PUT_LINE(ltrim(p,' '));
+		Output:=LTRIM(P,' ');
+		end;
+		/
+		------------------------------------------------------------------------------------------------
+		/
+		create or replace procedure denc(input varchar2,k number,Output OUT VARCHAR2) AS
+		a2z VARCHAR2(100):='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+		x number;
+		Y VARCHAR2(100);
+		Z VARCHAR2(250);
+		p varchar(1000) := ' ';
+		begin
+		z:= length(input);
+		FOR I IN 1..Z LOOP
+		x:= (instr (a2z,substr(input,i,1)))-k;
+		IF (X<1) THEN 
+		x:= x+62; 
+		END IF;
+		y:= substr(a2z,mod((x),62),1);
+		IF substr(input,i,1)=' ' THEN
+		p := p || ' ';
+		ELSE
+		p := p || y;
+		END IF;
+		END LOOP;
+		--DBMS_OUTPUT.PUT_LINE(ltrim(p,' '));
+		Output:=LTRIM(P,' ');
+		end;
+		/
+		--------------------------------------------------------------------------------------------------
+		Create Table Userlogin (
+		UNAME VARCHAR2(50),
+		PCODE VARCHAR2(50),
+		CONSTRAINT PKUSER PRIMARY KEY (UNAME),
+		Constraint Chkuser Check (Length(Uname)>4),
+		CONSTRAINT CHKPASS CHECK (LENGTH(PCODE)>=8) and REGEXP_LIKE(PCODE,'[:alnum:]'));
+		-------------------------------------------------------------------------------------------------- 
+		Create Table Enckey(
+		UNAME VARCHAR2(50),
+		Encnum Number(2) Default 5,
+		constraint fkuser foreign key (uname) references userlogin(uname) on delete cascade);
+		---------------------------------------------------------------------------------------------------
+		/
+		CREATE OR REPLACE PROCEDURE SIGNUP(USERNAME VARCHAR2,PASSCODE VARCHAR2,DOB DATE) AS
+		V_PASSCODE VARCHAR2(50);
+		M NUMBER;
+		pragma  AUTONOMOUS_TRANSACTION;
+		BEGIN
+		IF (DOB IS NULL) THEN
+		M:=5;
+		ELSE
+		M:=TO_NUMBER(TO_CHAR(DOB,'mm'));
+		END IF;
+		Enc(Passcode,M,V_Passcode);
+		Insert Into Userlogin Values(Upper(Username),V_Passcode);
+		INSERT INTO ENCKEY VALUES(UPPER(USERNAME),M);
+		commit;
+		END;
+		/
+		----------------------------------------------------------------------------------------------------
+		/
+		CREATE OR REPLACE PROCEDURE LOGIN(USERNAME VARCHAR2,PASSCODE VARCHAR2) AS
+		V_PASSCODE VARCHAR2(50);
+		XY_PASSCODE VARCHAR2(50);
+		M NUMBER;
+		Begin
+		Select Encnum Into M From Enckey Where Upper(Uname)=Upper(Username);
+		SELECT PCODE INTO V_PASSCODE FROM USERLOGIN WHERE UPPER(UNAME)=UPPER(USERNAME);
+		DENC(V_PASSCODE,M,XY_PASSCODE);
+		IF (PASSCODE=XY_PASSCODE) THEN
+		DBMS_OUTPUT.PUT_LINE('YOU ARE SUCESSFULLY LOGED IN');
+		ELSE
+		DBMS_OUTPUT.PUT_LINE('INCORRECT PASSWORD');
+		END IF;
+		EXCEPTION
+		WHEN NO_DATA_FOUND THEN
+		DBMS_OUTPUT.PUT_LINE('USER CREDENTIALS NOT FOUND');
+		END;
+		/
+		-------------------------------------------------------------------------------------------------------
+		EXEC SIGNUP(USERNAME =>'MURUGESAN',passcode => '6383931536',DOB => '01-AUG-1997);
+		EXEC SIGNUP(USERNAME =>'PRAKATHI',passcode => '9344800286',DOB => '04-OCT-1998);
+		EXEC SIGNUP(USERNAME =>'AJITH',passcode => '8778232465',DOB => '01-JUN-1997);
+
+		EXEC LOGIN(USERNAME =>'MURUGESAN',passcode => '6383931536');
+		EXEC LOGIN(USERNAME =>'PRAKATHI',passcode => '9344800286');
+		EXEC LOGIN(USERNAME =>'AJITH',passcode => '8778232465');
+		--------------------------------------------------------------------------------------------------------
+
+    </pre>
+    </p>
+    <hr>
+</body>
+
+</html>

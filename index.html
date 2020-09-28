@@ -13,67 +13,10 @@
     </pre>
     <h1> <pre>  I am AK </pre>
     </h1>
-    <hr>
-    <p>
-        <pre>
-
-    CREATE OR REPLACE PROCEDURE FLAMES(P_BOY VARCHAR2,P_GIRL VARCHAR2) AS
-    BOY VARCHAR2(50):= UPPER(P_BOY);
-    GIRL VARCHAR2(50):= UPPER(P_GIRL);
-    TYPE CHK IS TABLE OF VARCHAR2(1) INDEX BY BINARY_INTEGER;
-    NAME1 CHK;
-    NAME2 CHK;
-    FINAL_NAME VARCHAR2(50);
-    Z VARCHAR2(100) := ' ';
-    Y VARCHAR2(100) := ' ';
-    X NUMBER;
-    B VARCHAR2(255) := 'FLAMES';
-    C VARCHAR2(10);
-    BEGIN
-    ELECT SUBSTR(BOY,LEVEL,1) BULK COLLECT INTO NAME1 FROM DUAL CONNECT BY LEVEL <= LENGTH(BOY);
-    SELECT SUBSTR(GIRL,LEVEL,1) BULK COLLECT INTO NAME2 FROM DUAL CONNECT BY LEVEL <= LENGTH(GIRL);
-    FOR I IN NAME1.FIRST..NAME1.LAST LOOP
-    FOR J IN NAME2.FIRST..NAME2.LAST LOOP
-		IF NAME1(I) = NAME2(J) THEN
-			NAME1(I) := '';
-			NAME2(J) := '';
-		END IF;
-    END LOOP;
-    END LOOP;
-    FOR A IN NAME1.FIRST..NAME1.LAST LOOP
-    Z := Z || NAME1(A);
-    END LOOP;
-    FOR B IN NAME2.FIRST..NAME2.LAST LOOP
-    Y := Y || NAME2(B);
-    END LOOP;
-    FINAL_NAME := TRIM(Z)||TRIM(Y);
-    X := LENGTH(FINAL_NAME);
-    B := B||B||B||B||B||B||B||B||B||B||B||B||B||B||B;
-    C := SUBSTR(B,X,1);
-    B := SUBSTR(REPLACE(B,C,''),INSTR(B,C));
-    C := SUBSTR(B,(X),1);
-    B := SUBSTR(REPLACE(B,C,''),INSTR(B,C));
-    C := SUBSTR(B,(X),1);
-    B := SUBSTR(REPLACE(B,C,''),INSTR(B,C));
-    C := SUBSTR(B,(X),1);
-    B := SUBSTR(REPLACE(B,C,''),INSTR(B,C));
-    C := SUBSTR(B,(X),1);
-    B := SUBSTR(REPLACE(B,C,''),INSTR(B,C));
-    B := SUBSTR(B,1,1);
-    IF (B = 'F') THEN B := 'FRIENDS';
-    ELSIF (B = 'L') THEN B := 'LOVE';
-    ELSIF (B = 'A') THEN B := 'AFFECTION';
-    ELSIF (B = 'M') THEN B := 'MARRIAGE';
-    ELSIF (B = 'E') THEN B := 'ENEMY';
-    ELSIF (B = 'S') THEN B := 'SISTER';
-    END IF;
-    DBMS_OUTPUT.PUT_LINE(boy || ' + ' || girl ||' = ' || B || '!');
-    END;
-    /
-    EXEC FLAMES('UNKNOWN','ANYONE');
-
+    <hr><pre>
+        <a href="ajith-002.gearhostpreview.com/flames/flames.html">FLAMES</a>
+        <a href="ajith-002.gearhostpreview.com/userlogin/userlogin.html">USER LOGIN</a>
     </pre>
-    </p>
     <hr>
 </body>
 
